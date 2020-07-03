@@ -71,7 +71,8 @@ def generate_summary(filename,top_n = 5):
 	for i in range(top_n):
     	 summarize_text.append(" ".join(ranked_sentences[i][1]))
 
-	print(summarize_text)
+	for i in range(len(summarize_text)):
+		print(summarize_text[i])
 
 number_top = sys.argv[1]
 generate_summary('example.txt',int(number_top))
