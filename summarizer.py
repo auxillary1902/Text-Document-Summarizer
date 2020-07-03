@@ -49,3 +49,22 @@ def build_similarity_matrix(sentences,stop_words):
     
     return similarity_matrix
 
+
+def generate_summary(filename,top_n = 5):
+	stop_words = stopwords.words('english')
+	summarize_text = []
+
+	sentences = read_article(filename)
+
+	sentences_similarity_matrix = build_similarity_matrix(sentences,stop_words)
+
+	sentence_similarity_graph = nx.from_numpy_array(sentences_similarity_matrix)
+
+	scores = nx.pagerank(sentence_similarity_graph)
+
+	ranked_sentences = sorted(((scores[i],s) for i,s in enumerate(sentences)), reverse=True)
+    
+    for i in range(top_n):
+    	summarize_text.append(" ".join(ranked_sentences[i][1]))
+
+    print("Summarized text: \n ,".join(summarize_text))
